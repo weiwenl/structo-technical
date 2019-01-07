@@ -36,6 +36,12 @@ class App extends Component {
       searchQuery: event.target.value
     });
 
+    const url = new URL('localhost:3000');
+    const params = new URLSearchParams(url.search);
+    params.set('search', event.target.value)
+    window.history.replaceState({}, '', `?${params}`);
+    
+
     let endpoint = 'https://api.github.com/search/repositories?q=' + searchTerm;
 
     axios.get(endpoint)
