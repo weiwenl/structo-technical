@@ -5,17 +5,19 @@ const DataOutput = (props) => {
     listStyleType: 'none',
     textAlign: 'left'
   }
+
   return(
-    <Fragment>
-      <ul style={outputStyles}>
-        <li>
-          <p>Display repo name: <a href="#">Repo Link</a></p>
-        </li>
-        <li>
-          <p>Display repo name: <a href="#">Repo Link</a></p>
-        </li>
+      <Fragment>
+        <ul style={outputStyles}>
+        {props.data?
+          props.data.map((item, index) => (
+          <li key={index}>
+            <a href={item.html_url} target="_blank" rel='noopener noreferrer' >{item.name}</a>
+          </li>
+        )) : null
+        }
       </ul>
-    </Fragment>
+      </Fragment>
   );
 }
 
