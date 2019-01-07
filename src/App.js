@@ -31,7 +31,6 @@ class App extends Component {
   }
 
   inputChangeHandler = (event) => {
-    let searchTerm = event.target.value;
     this.setState({
       searchQuery: event.target.value
     });
@@ -40,25 +39,31 @@ class App extends Component {
     const params = new URLSearchParams(url.search);
     params.set('search', event.target.value)
     window.history.replaceState({}, '', `?${params}`);
-    
+  }
 
+  submitQuery = (event) => {
+    let searchTerm = event.target.value;
     let endpoint = 'https://api.github.com/search/repositories?q=' + searchTerm;
 
-    axios.get(endpoint)
-      .then(response => {
-        this.setState({
-          repos: response.data.items
-        })
-      }).catch(error => { console.log(error)});
-      event.preventDefault();
-}
+    let code = event.which;
+      if(code === 13) {
+        axios.get(endpoint)
+          .then(response => {
+            this.setState({
+              repos: response.data.items
+            })
+          }).catch(error => { console.log(error)});
+          event.preventDefault();
+      }
+  }
 
 
   render() {
     return (
       <div className="App">
         <h1>Search public Github repositories</h1>
-        <UserInput changed={this.inputChangeHandler} value={this.state.searchQuery}/>
+        <UserInput changed={this.inputChangeHandler} value={this.state.searchQuery}
+        submitKey={this.submitQuery}/>
         <DataOutput data={this.state.repos}/>
       </div>
     );

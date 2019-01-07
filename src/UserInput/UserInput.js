@@ -12,7 +12,8 @@ const UserInput = (props) => {
         value={props.value}
         style={inputStyles}
         placeholder="Type Something"
-        onChange={props.changed} />
+        onChange={props.changed}
+        onKeyPress={props.submitKey}/>
     </div>
   );
 }
