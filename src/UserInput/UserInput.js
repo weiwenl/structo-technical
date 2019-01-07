@@ -7,7 +7,12 @@ const UserInput = (props) => {
   }
   return(
     <div>
-      <input type="text" style={inputStyles} onChange={props.changed} />
+      <input
+        type="search"
+        value={props.value}
+        style={inputStyles}
+        placeholder="Type Something"
+        onChange={props.changed} />
     </div>
   );
 }
