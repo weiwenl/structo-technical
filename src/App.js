@@ -13,6 +13,9 @@ class App extends Component {
       repos: []
     }
 
+  // after rendering page, get query string from url
+  // store the search term into state and make an api call on the search term
+  // the result of the api is stored in the repos state
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
 
@@ -30,17 +33,20 @@ class App extends Component {
     }).catch(error => { console.log(error)});
   }
 
+  // on input value changes get the changes and store into searchQuery state
   inputChangeHandler = (event) => {
     this.setState({
       searchQuery: event.target.value
     });
 
+    // setting the url search params to whatever user keys into input
     const url = new URL('localhost:3000');
     const params = new URLSearchParams(url.search);
     params.set('search', event.target.value)
-    window.history.replaceState({}, '', `?${params}`);
+    window.history.pushState({}, '', `?${params}`);
   }
 
+  // sends an api call when 'enter' key is pressed
   submitQuery = (event) => {
     let searchTerm = event.target.value;
     let endpoint = 'https://api.github.com/search/repositories?q=' + searchTerm;
